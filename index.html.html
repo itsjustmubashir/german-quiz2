@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Deutsch Kurs — 4 Levels</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --acc:#E67E22; --acc2:#C0392B; --onacc:#fff; --t1:#FFCF6B; --t2:#C0392B; --onbg:#fff;
+  --card:#ffffff; --ink:#2b2a3a; --muted:#6b6f8a; --line:#e6e6f0; --soft:#f6f5fb;
+  --ok:#0f9d58; --ok-bg:#e8f7ee; --bad:#d63031; --bad-bg:#fdeaea; --shadow:rgba(20,10,40,.28);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --card:#241f33; --ink:#f3f1fb; --muted:#b9b6cf; --line:#3a3350; --soft:#2d2740; --ok-bg:#123a26; --bad-bg:#3d1717; } }
+:root[data-theme="dark"]{ --card:#241f33; --ink:#f3f1fb; --muted:#b9b6cf; --line:#3a3350; --soft:#2d2740; --ok-bg:#123a26; --bad-bg:#3d1717; }
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 20px)}
+body{margin:0;min-height:100%;color:var(--ink);font-family:"Inter",system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--t1),var(--t2));background-attachment:fixed;transition:background .3s}
+h1,h2,h3,.brand{font-family:"Fredoka",sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:26px 16px 60px}
+.brand{font-size:32px;color:var(--onbg);text-align:center;margin:8px 0 18px;text-shadow:0 2px 10px rgba(0,0,0,.2)}
+.card{background:var(--card);border-radius:20px;box-shadow:0 16px 40px var(--shadow);padding:24px 20px;margin-bottom:16px}
+.center{text-align:center}
+h2{margin:0 0 10px;font-size:26px} h3{margin:0 0 8px}
+p{line-height:1.55}
+input[type=text],textarea{width:100%;font:inherit;font-size:17px;padding:13px 14px;border-radius:12px;border:2px solid var(--line);background:#fff;color:#222;margin:8px 0 14px}
+input[type=text]:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:1px}
+.btn{display:inline-block;text-align:center;text-decoration:none;font:inherit;font-weight:700;font-size:16px;cursor:pointer;border:0;border-radius:14px;padding:13px 22px;color:var(--onacc);background:linear-gradient(135deg,var(--acc),var(--acc2));box-shadow:0 8px 18px rgba(0,0,0,.2)}
+.btn:hover{filter:brightness(1.07)} .btn:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
+.btn.wa{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff}
+.btn.block{display:block;width:100%}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+ul.guide{padding-left:20px;line-height:1.7}
+.levelcard{display:flex;align-items:center;gap:14px;border-radius:16px;padding:14px;margin-bottom:12px;background:var(--soft);cursor:pointer;border:2px solid transparent}
+.levelcard:hover{border-color:var(--acc)} .levelcard.locked{cursor:not-allowed;opacity:.55}
+.levelcard .dot{width:46px;height:46px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
+.levelcard .info{flex:1;min-width:0} .levelcard .info b{display:block;font-size:17px} .levelcard .info span{color:var(--muted);font-size:14px}
+.levelcard .status{font-size:13px;font-weight:700;text-align:right}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-radius:0 0 16px 16px;padding:10px 16px;margin:-26px -16px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;box-shadow:0 6px 16px var(--shadow)}
+.track{flex:1;height:10px;background:var(--line);border-radius:6px;overflow:hidden;min-width:80px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .25s}
+.qcount{font-weight:700;font-size:14px;white-space:nowrap} .cheer{flex-basis:100%;font-size:13px;font-weight:600;color:var(--muted)}
+.qcard{background:var(--card);border-radius:18px;box-shadow:0 10px 24px var(--shadow);padding:16px;margin-bottom:14px;border-left:8px solid var(--acc)}
+.tagpill{display:inline-block;background:var(--soft);border-radius:999px;padding:3px 11px;font-size:12px;font-weight:700;margin-bottom:8px}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0;font-weight:700;font-size:17px;display:flex;gap:10px;margin-bottom:10px;float:left;width:100%}
+legend .n{flex:none;width:30px;height:30px;border-radius:8px;background:var(--acc);color:var(--onacc);display:flex;align-items:center;justify-content:center;font-size:14px}
+.opts{clear:both;display:grid;gap:8px}
+label.opt{display:flex;align-items:center;gap:12px;padding:11px 14px;border:2px solid var(--line);border-radius:12px;cursor:pointer;background:var(--card)}
+label.opt:hover{border-color:var(--acc)}
+label.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.dot2{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--acc);background:var(--card)}
+label.opt input:checked + .dot2{background:var(--acc)}
+label.opt input:checked ~ .txt{font-weight:700}
+label.opt input:focus-visible + .dot2{outline:3px solid var(--ink);outline-offset:2px}
+.big{font-family:"Fredoka",sans-serif;font-size:56px;line-height:1;margin:6px 0} .big small{font-size:24px;color:var(--muted)}
+.pass{color:var(--ok)} .fail{color:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.chip{width:32px;height:32px;border-radius:9px;color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+.chip.ok{background:var(--ok)} .chip.bad{background:var(--bad)}
+.rc{border-radius:14px;padding:14px;margin-bottom:12px;border:2px solid var(--bad);background:var(--bad-bg)}
+.rc .q{font-weight:700;margin-bottom:8px} .rc .line{font-size:15px;margin:3px 0}
+.rc .ex{margin-top:10px;padding-top:8px;border-top:1px dashed var(--muted);font-size:14.5px;line-height:1.55}
+.rc .ex div{margin-top:5px}
+.note{color:var(--muted);font-size:14px}
+.emojis{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.emo{font-size:34px;line-height:1;background:var(--soft);border:3px solid transparent;border-radius:16px;padding:10px 12px;cursor:pointer}
+.emo:hover{transform:scale(1.08)} .emo.on{border-color:var(--acc);background:var(--card);transform:scale(1.12)}
+.emo:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.imgbox img{width:100%;max-width:420px;border-radius:12px;display:block;margin:12px auto;border:2px solid var(--line)}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){.fill,body,.emo{transition:none}.emo:hover,.emo.on{transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+(function(){
+"use strict";
+var SHARE_URL = "https://itsjustmubashir.github.io/german-quiz/";
+
+/* ---------- colour themes: warm & light for Easy → dark & intense for Very Hard ---------- */
+var THEMES = {
+  home:    {acc:"#E67E22",acc2:"#C0392B",onacc:"#fff",t1:"#FFCF6B",t2:"#C0392B",onbg:"#fff"},
+  easy:    {acc:"#F9A825",acc2:"#F57F17",onacc:"#3b2a00",t1:"#FFF3B0",t2:"#FFD166",onbg:"#5b3a00"},
+  medium:  {acc:"#EF6C00",acc2:"#D84315",onacc:"#fff",t1:"#FFB86B",t2:"#FF7A45",onbg:"#fff"},
+  hard:    {acc:"#C62828",acc2:"#8E1B1B",onacc:"#fff",t1:"#E4572E",t2:"#7E1616",onbg:"#fff"},
+  veryhard:{acc:"#7B1FA2",acc2:"#4527A0",onacc:"#fff",t1:"#3B1B6E",t2:"#120A24",onbg:"#fff"}
+};
+function applyTheme(key){
+  var t = THEMES[key] || THEMES.home, s = document.documentElement.style;
+  s.setProperty("--acc",t.acc); s.setProperty("--acc2",t.acc2); s.setProperty("--onacc",t.onacc);
+  s.setProperty("--t1",t.t1); s.setProperty("--t2",t.t2); s.setProperty("--onbg",t.onbg);
+}
+
+/* ---------- questions: [tag, prompt, [correct first, 3 wrong], what it is, how it is applied, topic] ---------- */
+function mk(rows){ return rows.map(function(r){ return {tag:r[0],q:r[1],o:r[2].slice(),c:0,w:r[3],y:r[4],k:r[5]}; }); }
+
+var EASY = mk([
+[`🌅 Morning rush`,`It is 8 am and you walk into class. What do you say?`,[`Guten Morgen`,`Gute Nacht`,`Guten Abend`,`Tschüss`],`'Guten ___' is a greeting frame; the last word names the time of day (Morgen, Tag, Abend, Nacht).`,`Match the time in the story to the time word. Words like Tschüss are for leaving, not arriving.`,`greet`],
+[`🌆 Evening chat`,`It is 7 pm and you meet your neighbour. What do you say?`,[`Guten Abend`,`Guten Morgen`,`Gute Nacht`,`Ciao`],`'Abend' names the evening. 'Gute Nacht' is the bedtime wish and 'Ciao' is a casual goodbye.`,`Use the evening frame when you meet someone after the afternoon; save the night phrase for going to sleep.`,`greet`],
+[`😎 Friends only`,`You leave your best friend. Which goodbye is casual?`,[`Tschüss`,`Auf Wiedersehen`,`Guten Tag`,`Danke schön`],`A farewell is a phrase that ends a conversation. German has a casual one and a formal one.`,`Use the casual one with friends and family, the formal one with teachers and strangers.`,`bye`],
+[`🎁 Thank you!`,`Someone helps you a lot. Which phrase says 'thank you very much'?`,[`Danke schön`,`Bis bald`,`Hallo`,`Ciao`],`'Danke' means thanks; adding 'schön' makes it warmer.`,`Say it right after someone helps or gives you something. It is not a greeting or a goodbye.`,`thanks`],
+[`💬 Ask it`,`Which phrase asks a friend 'How are you?'`,[`Wie geht's?`,`Wie heißt du?`,`Woher kommst du?`,`Wo wohnst du?`],`'Wie geht's?' is short for 'Wie geht es dir?' and asks about wellbeing.`,`Each question asks for different information: how you are, your name, your origin or your home.`,`qw`],
+[`🔢 Number hunt`,`Which digit is 'sieben'?`,[`7`,`17`,`6`,`9`],`Numbers up to twelve have their own words; 13–19 are built from a small number + 'zehn'.`,`Read the whole word: 'sieben' alone is a single digit, while the teen version adds -zehn.`,`num`],
+[`🔢 Number hunt`,`Which word is the number 15?`,[`fünfzehn`,`fünf`,`sechzehn`,`vierzehn`],`Teens are formed as small number + 'zehn' (from 13 to 19).`,`Take the small number (5) and add -zehn; check the neighbours 14 and 16 so you don't slip.`,`num`],
+[`🔢 Number hunt`,`Which word means 20?`,[`zwanzig`,`zwölf`,`zwei`,`zehn`],`'zwanzig' is the round number that follows the teens.`,`Don't be fooled by other words starting with 'zw-': 'zwei' is 2 and 'zwölf' is 12.`,`num`],
+[`🎯 What's next?`,`drei, vier, fünf, ___ — which number comes next?`,[`sechs`,`acht`,`zwei`,`zehn`],`Counting order runs eins, zwei, drei, vier, fünf, sechs …`,`Say the sequence in your head and continue with the very next number.`,`num`],
+[`🎨 Colour lab`,`The sky on a sunny day is 'blau'. Which colour is that?`,[`Blue`,`Red`,`Green`,`Yellow`],`Colour words are adjectives: Blau, Rot, Grün, Gelb, Lila, Braun, Schwarz …`,`Link the German colour word to something you can see; sky and blau go together.`,`col`],
+[`🎨 Colour lab`,`You see a ripe tomato. Which German word fits its colour?`,[`Rot`,`Grün`,`Gelb`,`Braun`],`'Rot' is one of the basic colour adjectives.`,`Match the picture you imagine to the colour word; the other three are green, yellow and brown.`,`col`],
+[`🎨 Colour lab`,`'Schwarz' is the colour of…`,[`night / coal`,`snow`,`grass`,`a banana`],`Schwarz is the colour adjective for black.`,`Think of typical black things and rule out the white, green and yellow objects.`,`col`],
+[`📅 Day check`,`Which English day is 'Montag'?`,[`Monday`,`Sunday`,`Tuesday`,`Friday`],`German weekdays: Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag.`,`The German names look like the English ones: compare the beginnings of the words.`,`day`],
+[`🏖️ Weekend!`,`Which two days make 'das Wochenende'?`,[`Samstag and Sonntag`,`Montag and Dienstag`,`Mittwoch and Donnerstag`,`Freitag and Samstag`],`'Wochenende' = week + end.`,`The weekend is the block of days at the very end of the week, after the working days.`,`day`],
+[`🗓️ Month match`,`Which month is 'März'?`,[`March`,`May`,`June`,`August`],`German month names look like the English ones; März carries an umlaut.`,`Compare the first letters: März, Mai, Juni and August each match a different English month.`,`month`],
+[`🌞 Season time`,`Which season is 'Sommer'?`,[`Summer`,`Winter`,`Spring`,`Autumn`],`The four seasons are Frühling, Sommer, Herbst and Winter.`,`Recognise it by its similarity to the English word.`,`season`],
+[`🔤 Letter lab`,`Which letters are called Umlauts?`,[`ä, ö, ü`,`ß, x, y`,`a, e, i`,`ch, sch, tsch`],`Umlauts are vowels with two dots above them.`,`Spot the dots: they change the sound of the vowel.`,`alpha`],
+[`🔤 Letter lab`,`Which letter looks like a big B and sounds like 'ss'?`,[`ß`,`ä`,`ü`,`ö`],`'ß' is called Eszett (or scharfes S).`,`You meet it inside words like 'heißen'; it stands where a double s would be.`,`alpha`],
+[`👂 Say what?`,`You did not hear your teacher. Which phrase asks 'Sorry, what?'`,[`Wie bitte?`,`Danke schön`,`Guten Tag`,`Tschüss`],`'Wie bitte?' is a classroom phrase for 'pardon?'.`,`Use it politely when you did not understand and want something repeated.`,`class`],
+[`🐢 Slow down`,`The teacher speaks too fast. Which phrase asks for a slower pace?`,[`Bitte ein bisschen langsamer`,`Guten Abend`,`Bis bald`,`Danke schön`],`'langsamer' comes from 'langsam' (slow); 'ein bisschen' means 'a little'.`,`Add 'bitte' to stay polite when you ask someone to speak more slowly.`,`class`],
+[`👪 Family`,`Which word means 'brother'?`,[`Bruder`,`Schwester`,`Vater`,`Mutter`],`Family words: Vater, Mutter, Bruder, Schwester.`,`Male family members have the male words; Schwester and Mutter are female.`,`fam`],
+[`👪 Family`,`Which word means 'mother'?`,[`Mutter`,`Vater`,`Bruder`,`Lehrer`],`'Mutter' is the word for the female parent.`,`Compare it with 'Vater' (male parent) and 'Lehrer' (teacher).`,`fam`],
+[`🔄 Opposites`,`What is the opposite of 'alt' (old)?`,[`neu`,`kalt`,`kurz`,`spät`],`Adjectives often come in opposite pairs (alt/neu, heiß/kalt, kurz/lang).`,`Pick the adjective that describes the same property at the other end: 'alt' is about age.`,`adj`],
+[`💰 Price tag`,`Which adjective means 'cheap'?`,[`billig`,`teuer`,`schnell`,`langsam`],`'billig' and 'teuer' describe price.`,`Decide whether the price is low or high; the other two words describe speed.`,`adj`],
+[`🌍 Map time`,`Which country is 'Deutschland'?`,[`Germany`,`Austria`,`Switzerland`,`France`],`Country names in German can look different from English: Deutschland, Österreich, die Schweiz, Frankreich.`,`Learn each German name together with its English one; Österreich and die Schweiz are neighbours.`,`country`]
+]);
+
+var MEDIUM = mk([
+[`👩 Pronoun swap`,`Sara is a woman. Which pronoun can replace 'Sara'?`,[`sie`,`er`,`es`,`wir`],`A pronoun replaces a noun or a name so you don't repeat it.`,`Match the person: one female person needs the singular female pronoun.`,`pron`],
+[`🙋 About me`,`Bilal talks about himself. Which pronoun does he use?`,[`ich`,`du`,`er`,`ihr`],`'ich' is the first-person pronoun (I).`,`Use it whenever the speaker talks about themself.`,`pron`],
+[`🤝 To one friend`,`You speak to one close friend. Which 'you' fits?`,[`du`,`ihr`,`Sie`,`wir`],`German has three 'you' words: du (friendly, one person), ihr (friendly, several people) and Sie (polite).`,`Count the people first, then decide friendly or polite.`,`pron`],
+[`👯 To the group`,`You speak informally to all your classmates. Which 'you all' fits?`,[`ihr`,`du`,`Sie`,`er`],`'ihr' is the friendly plural 'you'.`,`More than one friend means plural, so the singular 'du' is out.`,`pron`],
+[`🎩 To the headmaster`,`You speak politely to your headmaster. Which pronoun?`,[`Sie`,`du`,`ihr`,`es`],`Polite 'Sie' is always written with a capital S.`,`Use it for strangers, teachers and anyone you address with respect.`,`pron`],
+[`🪑 der, die or das?`,`Choose the article: ___ Tisch (table)`,[`der`,`die`,`das`,`eine`],`Every German noun has a gender: masculine (der), feminine (die) or neuter (das).`,`The gender is learned together with the noun; Tisch sits with the masculine words in your notes.`,`art`],
+[`🌸 Feminine club`,`Which noun takes 'die'?`,[`Lampe`,`Computer`,`Tisch`,`Mann`],`Feminine nouns take 'die' (and 'eine' for 'a').`,`In your notes Lampe, Tasche, Flasche and Tür are in the 'eine' list, which is the feminine group.`,`art`],
+[`🧒 Match up`,`Which pair is correct?`,[`das Kind – es`,`der Mann – sie`,`die Frau – er`,`das Buch – sie`],`A pronoun copies the gender of its noun: der → er, die → sie, das → es.`,`Check the article of the noun first, then pick the pronoun that belongs to it.`,`art`],
+[`👩‍🏫 Female form`,`What is the female form of 'der Lehrer'?`,[`die Lehrerin`,`der Lehrerin`,`das Lehrerin`,`die Lehrer`],`Adding -in turns a person word into its female form.`,`The female form needs BOTH the -in ending and the feminine article 'die'.`,`art`],
+[`🚶 Verb meaning`,`What does 'kommen' mean?`,[`to come`,`to live`,`to have`,`to be`],`'kommen' is a regular verb; 'kommen aus' says where you come from.`,`It pairs with 'aus' plus a country or city.`,`verb`],
+[`🧠 Being`,`Which verb do you use to say what someone IS (a student, tired)?`,[`sein`,`haben`,`wohnen`,`kommen`],`'sein' is the verb 'to be'.`,`It is used for jobs, feelings and descriptions. It is irregular, so its forms must be memorised.`,`verb`],
+[`🎒 Owning`,`Which verb do you use to say what someone OWNS?`,[`haben`,`sein`,`heißen`,`kommen`],`'haben' is the verb 'to have'.`,`Put it before the thing that is owned, such as 'a phone' or 'a car'.`,`verb`],
+[`🏙️ Ask where`,`You want to know a classmate's city. Which question word?`,[`Wo`,`Woher`,`Wer`,`Wie`],`Question words (W-words) start a W-Frage and each asks for one kind of information.`,`'Where (a place)' asks about a location, not an origin or a person.`,`qw`],
+[`🕵️ Ask who`,`You want to know who a person is. Which question word?`,[`Wer`,`Wo`,`Woher`,`Wie`],`'wer' = who.`,`Use it when the answer will be a person or a name.`,`qw`],
+[`🧭 Ask origin`,`Which question asks for someone's country of origin?`,[`Woher kommst du?`,`Wo wohnst du?`,`Wie heißt du?`,`Wer bist du?`],`'Woher' means 'from where'.`,`It asks for a starting point, so it pairs naturally with 'kommen'.`,`qw`],
+[`🔄 Real opposites`,`Which pair are opposites?`,[`schnell – langsam`,`neu – kalt`,`teuer – kurz`,`früh – krank`],`An opposite pair describes one property at both ends.`,`Check each pair: both words must talk about the same thing (speed, age, price …).`,`adj`],
+[`💸 Price talk`,`Which adjective describes something that costs a lot?`,[`teuer`,`billig`,`kurz`,`spät`],`'teuer' describes a high price.`,`Adjectives can stand after 'ist': Das Auto ist …`,`adj`],
+[`😴 No energy`,`You have no energy today. Which adjective fits?`,[`müde`,`aktiv`,`gesund`,`schnell`],`'müde' means tired; 'aktiv' is its opposite in your notes.`,`Describe how you feel with 'ich bin' + an adjective.`,`adj`],
+[`🎩 Polite question`,`Which question is polite?`,[`Wie heißen Sie?`,`Wie heißt du?`,`Wo wohnst du?`,`Woher kommst du?`],`Polite questions use 'Sie' together with the -en verb form.`,`Look at the pronoun: 'Sie' means polite, 'du' means friendly.`,`formal`],
+[`🗣️ Language link`,`Someone from Italien speaks…`,[`Italienisch`,`Spanisch`,`Polnisch`,`Griechisch`],`Languages are named after their country: Italien → Italienisch.`,`Look for the matching stem; the other options belong to Spain, Poland and Greece.`,`country`],
+[`🗺️ Country clue`,`Someone speaks 'Polnisch'. Which country do they most likely come from?`,[`Polen`,`Portugal`,`Griechenland`,`Spanien`],`The language name contains the country's stem.`,`Work backwards from language to country; similar first letters (Polen/Portugal) are traps.`,`country`],
+[`🔍 Sentence type`,`'Wo wohnst du?' is a…`,[`W-Frage (question)`,`Aussagesatz (statement)`,`Greeting`,`Farewell`],`A W-Frage starts with a question word and asks for information.`,`If it opens with Wo / Wer / Wie / Woher and ends with '?', it is a W-Frage.`,`type`],
+[`📢 Say it`,`Which sentence is a statement about yourself?`,[`Ich komme aus Pakistan.`,`Woher kommst du?`,`Wie heißt du?`,`Wo wohnst du?`],`An Aussagesatz gives information instead of asking for it.`,`It has no question word and the verb sits in 2nd place, right after the subject.`,`type`],
+[`➖ Number math`,`zwölf minus vier = ?`,[`acht`,`neun`,`sieben`,`zehn`],`zwölf is 12 and vier is 4.`,`Do the subtraction with digits first, then find the German word.`,`num`],
+[`🏆 Biggest`,`Which number is the biggest?`,[`achtzehn`,`sechzehn`,`dreizehn`,`elf`],`Teens 13–19 are small number + 'zehn'; 11 and 12 are special words.`,`Turn each word into a digit before you compare them.`,`num`]
+]);
+
+var HARD = mk([
+[`✏️ Fill the gap`,`Ich ___ Anna. (heißen)`,[`heiße`,`heißt`,`heißen`,`heiß`],`'heißen' = to be called. Regular verbs are built from the stem (heiß-) plus a personal ending.`,`Each pronoun has its own ending; for 'I' the ending is -e.`,`v1`],
+[`✏️ Fill the gap`,`Du ___ aus Lahore. (kommen)`,[`kommst`,`komme`,`kommt`,`kommen`],`'kommen' = to come; the stem is komm- plus an ending.`,`For the friendly 'you' the ending is -st.`,`v2`],
+[`✏️ Fill the gap`,`Er ___ in Wien. (wohnen)`,[`wohnt`,`wohne`,`wohnst`,`wohnen`],`'wohnen' = to live; the stem is wohn- plus an ending.`,`For one person (he / she / it) the ending is -t.`,`v3`],
+[`✏️ Fill the gap`,`Wir ___ Studenten. (sein)`,[`sind`,`seid`,`bin`,`ist`],`'sein' = to be. It is irregular, so its forms do not follow stem + ending.`,`For 'we' use the plural form, which is also the form used for 'they'.`,`v4`],
+[`✏️ Fill the gap`,`Ihr ___ ein Auto. (haben)`,[`habt`,`haben`,`hast`,`hat`],`'haben' = to have. It is nearly regular but loses its b in two forms.`,`For 'ihr' the b stays and the ending is -t.`,`v5`],
+[`🧩 Build it`,`Which sentence has the verb in the correct place (statement)?`,[`Sara kommt aus Polen.`,`Sara aus Polen kommt.`,`Kommt Sara aus Polen aus.`,`Polen Sara kommt aus.`],`In a German statement the verb is the second element.`,`Count the elements: subject first, verb straight after it.`,`order`],
+[`🧩 Build it`,`Put in order: heißt / wie / du`,[`Wie heißt du?`,`Du wie heißt?`,`Heißt wie du?`,`Wie du heißt?`],`A W-Frage begins with the question word.`,`Then the verb comes second and the subject third.`,`order`],
+[`🎩 Introduce yourself`,`Nina wants to introduce herself politely to Herr Kaya. Which sentence fits?`,[`Guten Tag! Mein Name ist Nina Weber.`,`Hallo! Wer bist du?`,`Tschüss! Ich heiße Nina.`,`Gute Nacht! Wie geht's?`],`A polite introduction combines a formal greeting with 'Mein Name ist …'.`,`Choose the sentence that greets first and then gives a name, without friendly 'du' phrases or goodbyes.`,`formal`],
+[`👋 Reply to a goodbye`,`Your friend says 'Bis bald!' Which reply fits?`,[`Tschüss!`,`Guten Morgen!`,`Ich komme aus Berlin.`,`Wie heißt du?`],`A farewell is normally answered with a farewell.`,`Don't answer a goodbye with a greeting, a question about the name, or a statement about origin.`,`reply`],
+[`🔁 Swap it`,`Replace the noun: 'Die Flasche ist neu.' → '___ ist neu.'`,[`Sie`,`Er`,`Es`,`Wir`],`A pronoun copies the gender of the noun it replaces.`,`Look at the article 'die' to know which pronoun matches.`,`pron`],
+[`🔁 Swap it`,`Replace the noun: 'Der Computer ist schnell.' → '___ ist schnell.'`,[`Er`,`Sie`,`Es`,`Ihr`],`Pronouns keep the gender of the noun they stand for.`,`The article 'der' tells you which pronoun to choose.`,`pron`],
+[`👯 Two people`,`Replace the names: 'Anna und Ali sind Studenten.' → '___ sind Studenten.'`,[`Sie`,`Wir`,`Ihr`,`Er`],`Two people you are talking ABOUT are 'they' (sie, small s).`,`'Wir' includes the speaker and 'ihr' talks directly to the people, so neither can replace names you talk about.`,`pron`],
+[`🔎 ein or eine`,`Das ist ___ Tasche.`,[`eine`,`ein`,`der`,`das`],`'ein' and 'eine' both mean 'a / an'; the noun's gender picks the form.`,`Feminine nouns like Tasche take the form ending in -e.`,`art`],
+[`🔎 ein or eine`,`Ich habe ___ Buch.`,[`ein`,`eine`,`die`,`das`],`'ein' and 'eine' both mean 'a / an'.`,`Neuter and masculine nouns take the plain form without -e.`,`art`],
+[`🧭 aus or in?`,`Wir kommen ___ Pakistan.`,[`aus`,`in`,`an`,`auf`],`'aus' = from / out of; 'in' = in / inside.`,`'kommen' needs the word for 'from' to name where you originate.`,`prep`],
+[`🧭 aus or in?`,`Sie wohnt ___ Hamburg.`,[`in`,`aus`,`zu`,`an`],`'wohnen' says where you live.`,`So it takes the place-word 'in' before the city.`,`prep`],
+[`🗣️ Speak up`,`Sie kommt aus Frankreich. Sie spricht ___.`,[`Französisch`,`Spanisch`,`Italienisch`,`Polnisch`],`'sprechen' (to speak) is followed directly by the language name.`,`Take the language from the country mentioned in the first sentence.`,`lang`],
+[`⚡ Irregular verb`,`Er ___ Deutsch. (sprechen)`,[`spricht`,`sprecht`,`spreche`,`sprichst`],`'sprechen' is irregular: the vowel e changes to i for 'du' and for he / she / it.`,`For one person (he / she / it) use the changed vowel plus the ending -t.`,`v6`],
+[`🎯 Be or have?`,`Which sentence is correct?`,[`Ich bin müde.`,`Ich habe müde.`,`Ich wohne müde.`,`Ich komme müde.`],`'müde' is an adjective, and adjectives that describe you follow 'sein'.`,`'haben' needs a thing you own, not a feeling.`,`hs`],
+[`🧩 Match`,`Which reply fits 'Woher kommst du?'`,[`Aus Pakistan.`,`In Lahore.`,`Ich heiße Ali.`,`Danke, gut.`],`'Woher' asks for the origin.`,`The reply starts with 'aus' plus a country or city.`,`reply`],
+[`🧩 Match`,`Which reply fits 'Wer bist du?'`,[`Ich bin Ali.`,`In Islamabad.`,`Aus Pakistan.`,`Ganz gut.`],`'Wer' asks for a person's identity.`,`The reply says who you are with 'ich bin …' or 'ich heiße …'.`,`reply`],
+[`👂 Sound check`,`How is 'ie' pronounced in 'vier'?`,[`like a long 'ee'`,`like 'eye'`,`like 'oy'`,`like 'ow'`],`Letter combinations have fixed sounds: ie, ei, au, eu …`,`'ie' gives the long 'ee', while 'ei' sounds like the English word 'eye'.`,`sound`],
+[`👂 Sound check`,`How does 'st' sound at the start of 'Student'?`,[`like 'sht'`,`like 'st' in English`,`like 'sk'`,`like 'ts'`],`Some letter combinations change their sound at the beginning of a word.`,`At the start of a word, 'st' is pronounced with an 'sh' sound.`,`sound`],
+[`🔍 Which Sie?`,`In 'Woher kommen Sie?' the word 'Sie' means…`,[`you (polite)`,`she`,`they`,`we`],`'Sie' with a capital S is the polite 'you'.`,`The -en verb form and the capital letter show it is polite here.`,`formal`],
+[`🎩 Polite sentence`,`Which question uses the polite pronoun correctly?`,[`Haben Sie ein Handy?`,`Hast Sie ein Handy?`,`Habe Sie ein Handy?`,`Habt Sie ein Handy?`],`The verb ending must match the pronoun.`,`Polite 'Sie' takes the plain -en form of the verb; 'du', 'ich' and 'ihr' have their own forms.`,`formal`]
+]);
+
+var VERYHARD = mk([
+[`🕵️ Spot the mistake`,`Which 'wohnen' sentence has a grammar mistake?`,[`Wir wohnt in Köln.`,`Ich wohne in Köln.`,`Du wohnst in Köln.`,`Sie wohnen in Köln.`],`Each pronoun forces one verb ending.`,`Test each pair: 'we' needs the plural ending, not the one for a single person.`,`spot`],
+[`🕵️ Spot the mistake`,`Which 'haben' sentence contains a mistake?`,[`Er habt eine Uhr.`,`Du hast eine Uhr.`,`Ich habe eine Uhr.`,`Wir haben eine Uhr.`],`'haben' changes form with the person and drops its b in two forms.`,`Match each pronoun with its form: the -t ending that keeps the b belongs to 'ihr', not to 'er'.`,`spot`],
+[`🕵️ Spot the mistake`,`Which 'sein' sentence is wrong?`,[`Ich bist Student.`,`Du bist Student.`,`Er ist Student.`,`Wir sind Studenten.`],`'sein' has a different form for every person.`,`Check the person of each pronoun; one of these forms belongs to 'du', not to 'ich'.`,`spot`],
+[`💬 Complete the dialogue`,`A: Woher kommen Sie? B: ___`,[`Ich komme aus Österreich.`,`Du kommst aus Österreich.`,`Er kommen aus Österreich.`,`Wir kommt aus Österreich.`],`In a reply the speaker talks about themself, so the subject is 'I'.`,`Choose the answer with the correct pronoun AND its matching verb form.`,`dialog`],
+[`💬 Complete the dialogue`,`A: Wo wohnt ihr? B: ___`,[`Wir wohnen in Wien.`,`Ich wohnt in Wien.`,`Ihr wohnt in Wien.`,`Sie wohne in Wien.`],`When two or more people answer about themselves, they say 'we'.`,`Turn 'ihr' (you all) into 'wir' and use the matching plural verb form.`,`dialog`],
+[`🧠 Why?`,`Why do we say 'Ich bin' and not 'Ich sein'?`,[`'sein' is irregular and changes its form for each person`,`The verb always goes last`,`'Ich' is plural`,`'bin' is a noun`],`The infinitive (sein) is the 'name' of a verb, not the form you use in a sentence.`,`Regular verbs change their endings; irregular 'sein' changes the whole word.`,`why`],
+[`🧠 Why?`,`Why is it 'du hast' and not 'du habst'?`,[`'haben' is irregular and drops the b`,`'du' is plural`,`'hast' is a noun`,`It is just a spelling mistake`],`Some verbs are almost regular but have small changes.`,`'haben' loses the b for 'du' and for he / she / it, but keeps it for 'ihr'.`,`why`],
+[`📍 Position check`,`In 'Woher kommst du?', which word is the verb and where does it stand?`,[`kommst, in 2nd place`,`woher, in 1st place`,`du, in 3rd place`,`woher, in 2nd place`],`The verb expresses the action and carries the personal ending.`,`In statements and W-Fragen alike it stands in the second position.`,`why`],
+[`🔗 Chain reaction`,`'Das Auto ist neu.' Replace the noun and continue: '___ ___ neu.'`,[`Es ist`,`Er ist`,`Es sind`,`Sie bist`],`Two steps: choose the pronoun for the noun, then the verb form for that pronoun.`,`'das' points to the neuter pronoun; a single thing takes the 3rd-person singular form of 'sein'.`,`chain`],
+[`🎩 Go polite`,`Change to polite: 'Woher kommst du?'`,[`Woher kommen Sie?`,`Woher kommst Sie?`,`Woher komme Sie?`,`Woher kommen du?`],`Politeness changes the pronoun and the verb ending together.`,`Replace 'du' by 'Sie' and switch the verb to its -en form.`,`formal`],
+[`😎 Go friendly`,`Change to friendly: 'Wo wohnen Sie?'`,[`Wo wohnst du?`,`Wo wohnt du?`,`Wo wohne du?`,`Wo wohnen du?`],`Friendly speech uses 'du' with the -st ending.`,`Replace 'Sie' by 'du' and adjust the verb ending.`,`formal`],
+[`🎒 Verb + article`,`Which sentence has both the verb and the article correct?`,[`Sie hat eine Tasche.`,`Sie habt ein Tasche.`,`Sie hast eine Tasche.`,`Sie haben ein Tasche.`],`Two things must agree: the verb with its subject, the article with its noun.`,`'Tasche' is feminine, and one woman takes the single-person verb form.`,`chain`],
+[`🗣️ Chain reaction`,`Sie kommt aus Polen und ___ Polnisch. (sprechen)`,[`spricht`,`sprechen`,`sprecht`,`spreche`],`'sprechen' is irregular (e becomes i for 'du' and he / she / it).`,`Find the person first ('sie' = she, singular), then use the changed stem with -t.`,`v6`],
+[`👫 Two subjects`,`Ali und Sara ___ aus Spanien. (kommen)`,[`kommen`,`kommt`,`komme`,`kommst`],`Two subjects joined by 'und' count as 'they'.`,`'They' uses the plural ending, which looks like the infinitive.`,`v2`],
+[`😴 Ihr and sein`,`Ihr ___ müde. (sein)`,[`seid`,`sind`,`bist`,`ist`],`'ihr' has its own irregular form of 'sein'.`,`Don't mix it up with the similar-looking form for 'wir' and 'they'.`,`v4`],
+[`🧩 Sentence builder`,`Put in order: aus / Pakistan / komme / ich`,[`Ich komme aus Pakistan.`,`Ich aus Pakistan komme.`,`Komme ich aus Pakistan.`,`Aus komme Pakistan ich.`],`A statement is built as subject – verb – rest.`,`Start with the subject, put the verb second, and add 'aus Pakistan' after it.`,`order`],
+[`🧩 Sentence builder`,`Put in order: wohnt / wo / Ali`,[`Wo wohnt Ali?`,`Ali wo wohnt?`,`Wohnt wo Ali?`,`Wo Ali wohnt?`],`A W-Frage starts with the question word.`,`Then comes the verb, and after it the subject (here a name).`,`order`],
+[`🚫 Rule breaker`,`Which sentence breaks the 'verb in 2nd place' rule?`,[`Ich Studentin bin.`,`Ich bin Studentin.`,`Sara ist Studentin.`,`Bist du Studentin?`],`In main clauses the verb sits in the 2nd position.`,`Count the elements of each sentence and find the one where the verb comes last.`,`order`],
+[`🤝 Same form`,`Which pair uses the SAME form of 'kommen'?`,[`wir + sie (they)`,`ich + du`,`er + du`,`ihr + ich`],`Regular verbs have fewer different forms than there are pronouns.`,`The plural 'we' and 'they' both keep the infinitive form.`,`ending`],
+[`📞 Say the digits`,`How do you say 0-1-7-3 digit by digit?`,[`null – eins – sieben – drei`,`null – zwei – sieben – drei`,`eins – null – sieben – drei`,`null – eins – siebzehn – drei`],`Phone numbers are read one digit at a time; 0 has its own word, 'null'.`,`Turn each digit into its own number word and keep the order.`,`num`],
+[`📧 E-mail talk`,`How do you say the symbol @ in a German e-mail address?`,[`ät`,`Punkt`,`minus`,`Unterstrich`],`Symbols in e-mail addresses have their own German names.`,`Eliminate the names that describe a dot, a hyphen and an underscore first.`,`email`],
+[`👂 Sound check`,`Which word has the SOFT 'ch' sound (as in 'ich')?`,[`Ich`,`Sprachen`,`Buch`,`auch`],`'ch' has two sounds depending on the vowel before it.`,`After i or e it is soft; after a, o, u or au it is the harder throat sound.`,`sound`],
+[`📖 Read & answer`,`Klara kommt aus Wien. Sie wohnt in Berlin. Sie spricht Deutsch und Englisch. Where does Klara live?`,[`In Berlin`,`In Wien`,`In Deutsch`,`In Englisch`],`In a short text each verb tells a different fact.`,`'kommt aus' gives the origin and 'wohnt in' gives the home — read the verb before the place.`,`read`],
+[`📖 Read & answer`,`Ali says: 'Ich habe eine Schwester und ein Auto.' What does Ali have?`,[`a sister and a car`,`a brother and a car`,`a sister and a bag`,`a mother and a house`],`'habe' shows possession; the nouns after it are what he owns.`,`List the nouns after 'habe' and translate each one.`,`read`],
+[`🏫 Best sentence`,`You talk to your teacher. Which sentence is correct in grammar AND politeness?`,[`Guten Tag, Frau Weber. Wie geht es Ihnen?`,`Hallo Weber, wie geht es dir?`,`Tschüss, Frau Weber, wie heißt du?`,`Guten Tag Frau Weber, woher kommst du?`],`Good German needs the right greeting and the right 'you'.`,`With a teacher use a formal greeting and the polite 'Sie / Ihnen', never 'du / dir'.`,`formal`]
+]);
+
+/* ---------- helpers ---------- */
+function shuffleArr(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+// spread the right answer evenly over A-D and shuffle the wrong options
+function balance(qs){
+  var slots=[]; for(var i=0;i<qs.length;i++) slots.push(i%4); slots=shuffleArr(slots);
+  qs.forEach(function(q,n){
+    var right=q.o[q.c], wrong=shuffleArr(q.o.filter(function(x,i){return i!==q.c;})), p=slots[n]%q.o.length;
+    q.o=wrong.slice(0,p).concat([right]).concat(wrong.slice(p)); q.c=p;
+  });
+  return qs;
+}
+// deterministic topic mixing: never two questions of the same topic back-to-back
+function mixByKey(qs){
+  var g={}; qs.forEach(function(q){ (g[q.k]=g[q.k]||[]).push(q); });
+  var keys=Object.keys(g), out=[], last=null;
+  while(out.length<qs.length){
+    var best=null;
+    keys.forEach(function(k){
+      if(!g[k].length) return;
+      if(k===last && keys.some(function(o){return o!==k && g[o].length;})) return;
+      if(best===null || g[k].length>g[best].length) best=k;
+    });
+    out.push(g[best].shift()); last=best;
+  }
+  return out;
+}
+
+var LEVELS=[
+ {key:"easy",name:"Easy",marks:25,pass:22,emoji:"🌞",desc:"Single words: greetings, numbers, colours, days, months, family, opposites.",q:mixByKey(EASY)},
+ {key:"medium",name:"Medium",marks:25,pass:20,emoji:"🔥",desc:"Pronouns, articles, verb meanings, question words, sentence types.",q:mixByKey(MEDIUM)},
+ {key:"hard",name:"Hard",marks:25,pass:17,emoji:"🌋",desc:"Verb forms, word order, polite vs friendly, replying, sounds.",q:mixByKey(HARD)},
+ {key:"veryhard",name:"Very Hard",marks:25,pass:15,emoji:"🌑",desc:"Spot mistakes, build sentences, dialogues and reasoning.",q:mixByKey(VERYHARD)}
+];
+var TOTAL=LEVELS.reduce(function(s,l){return s+l.marks;},0), CERT_PASS=LEVELS.reduce(function(s,l){return s+l.pass;},0);
+
+/* ---------- state ---------- */
+var LSKEY="deutsch4.progress.v5";
+function loadState(){ try{ var s=JSON.parse(localStorage.getItem(LSKEY)||"null"); if(s) return s; }catch(e){} return {name:"",levels:{}}; }
+function saveState(){ try{ localStorage.setItem(LSKEY,JSON.stringify(STATE)); }catch(e){} }
+var STATE=loadState();
+function getRec(lv){
+  var r=STATE.levels[lv.key];
+  if(!r||!r.earned||r.earned.length!==lv.q.length){ r={earned:lv.q.map(function(){return 0;}),score:0,best:0,passed:false,attempted:false,feedback:null}; STATE.levels[lv.key]=r; }
+  return r;
+}
+function remaining(lv,r){ var o=[]; lv.q.forEach(function(q,i){ if(!r.earned[i]) o.push(i); }); return o; }
+function unlocked(i){ if(i===0) return true; var r=STATE.levels[LEVELS[i-1].key]; return !!(r&&r.passed); }
+function allPassed(){ return LEVELS.every(function(l){var r=STATE.levels[l.key];return r&&r.passed;}); }
+function totalBest(){ return LEVELS.reduce(function(s,l){var r=STATE.levels[l.key];return s+(r?r.best:0);},0); }
+
+/* ---------- ui helpers ---------- */
+var app=document.getElementById("app");
+function el(tag,cls,html){ var e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
+function screen(n){ app.innerHTML=""; app.appendChild(n); window.scrollTo(0,0); }
+function brand(){ return el("div","brand","🇩🇪 Deutsch Kurs"); }
+function link(cls,text,href){ var a=el("a","btn "+cls,text); a.href=href; a.target="_blank"; a.rel="noopener noreferrer"; return a; }
+function waLink(text){ return "https://wa.me/?text="+encodeURIComponent(text); }
+
+/* ---------- welcome + guidelines ---------- */
+function renderWelcome(){
+  applyTheme("home");
+  var w=el("div"); w.appendChild(brand());
+  var c=el("div","card center");
+  c.appendChild(el("h1","","Willkommen! 👋"));
+  c.appendChild(el("p","","Ready to test your German? Tell me your name to begin."));
+  var inp=document.createElement("input"); inp.type="text"; inp.placeholder="Your name"; inp.value=STATE.name||""; inp.maxLength=40; c.appendChild(inp);
+  var b=el("button","btn block","Let's go ▶");
+  b.addEventListener("click",function(){ STATE.name=inp.value.trim()||"Student"; saveState(); renderGuidelines(); });
+  inp.addEventListener("keydown",function(e){ if(e.key==="Enter") b.click(); });
+  c.appendChild(b); w.appendChild(c); screen(w); setTimeout(function(){try{inp.focus();}catch(e){}},50);
+}
+function renderGuidelines(){
+  applyTheme("home");
+  var w=el("div"); w.appendChild(brand());
+  var c=el("div","card");
+  c.appendChild(el("h2","","Hallo, "+STATE.name+"! Here is how it works"));
+  var u=el("ul","guide");
+  u.innerHTML="<li><b>4 levels</b>, from light and warm to dark and intense: 🌞 Easy → 🔥 Medium → 🌋 Hard → 🌑 Very Hard.</li>"+
+   "<li>Every level has <b>25 multiple-choice questions</b>, 1 mark each — 100 marks in total. Each level is harder than the one before.</li>"+
+   "<li>Pass marks: Easy "+LEVELS[0].pass+", Medium "+LEVELS[1].pass+", Hard "+LEVELS[2].pass+", Very Hard "+LEVELS[3].pass+". Pass a level to unlock the next one.</li>"+
+   "<li>Answer everything, then press <b>Submit</b>. Your result appears at the <b>top</b>, and every mistake is explained right below it.</li>"+
+   "<li><b>Try again</b> only gives you back the questions you got wrong.</li>"+
+   "<li>After each level you get a thank-you page where you can share, request the next lesson and leave emoji feedback.</li>"+
+   "<li>Tip: do one level a day so it never feels like too much.</li>";
+  c.appendChild(u);
+  var b=el("button","btn block","See my levels ▶"); b.addEventListener("click",renderDashboard);
+  c.appendChild(b); w.appendChild(c); screen(w);
+}
+
+/* ---------- dashboard ---------- */
+function renderDashboard(){
+  applyTheme("home");
+  var w=el("div"); w.appendChild(brand());
+  var c=el("div","card"); c.appendChild(el("h2","","Hi "+STATE.name+", pick a level"));
+  LEVELS.forEach(function(lv,i){
+    var th=THEMES[lv.key], r=getRec(lv), open=unlocked(i);
+    var row=el("div","levelcard"+(open?"":" locked"));
+    var d=el("div","dot",lv.emoji); d.style.background="linear-gradient(135deg,"+th.acc+","+th.acc2+")"; row.appendChild(d);
+    var inf=el("div","info"); inf.appendChild(el("b","",lv.name+" — "+lv.marks+" marks")); inf.appendChild(el("span","",lv.desc)); row.appendChild(inf);
+    var st=el("div","status"), left=remaining(lv,r).length;
+    if(!open){ st.textContent="🔒 Locked"; }
+    else if(!r.attempted){ st.textContent="▶ Start"; }
+    else if(left>0){ st.innerHTML=(r.passed?"✅ ":"↻ ")+r.score+"/"+lv.marks+"<br>"+left+" to fix"; st.style.color=r.passed?"var(--ok)":"var(--bad)"; }
+    else { st.textContent="🏆 "+r.score+"/"+lv.marks; st.style.color="var(--ok)"; }
+    row.appendChild(st);
+    if(open) row.addEventListener("click",function(){ startAttempt(i, r.attempted&&left>0?"wrong":"full"); });
+    c.appendChild(row);
+  });
+  c.appendChild(el("p","note","Best total so far: "+totalBest()+" / "+TOTAL+" · need "+CERT_PASS+" and all four levels passed for the certificate."));
+  if(allPassed()){ var cb=el("button","btn block","🎓 View my certificate"); cb.addEventListener("click",renderCertificate); c.appendChild(cb); }
+  w.appendChild(c); screen(w);
+}
+
+/* ---------- quiz ---------- */
+function startAttempt(idx,mode){
+  var lv=LEVELS[idx], r=getRec(lv);
+  if(mode==="full"){ r.earned=lv.q.map(function(){return 0;}); r.score=0; }
+  var ids=remaining(lv,r);
+  STATE.levels[lv.key]=r; saveState();
+  if(!ids.length){ renderDashboard(); return; }
+  var items=ids.map(function(i){return lv.q[i];}); balance(items);
+  renderQuiz(idx,ids,items,items.map(function(){return null;}),mode);
+}
+function cheerText(p){ return p===0?"Let's go! 🚀":p<25?"Nice start 💪":p<50?"You're rolling 🔥":p<75?"Over halfway ⭐":p<100?"Almost there 🏁":"All answered — hit Submit! 🎯"; }
+function renderQuiz(idx,ids,items,answers,mode){
+  var lv=LEVELS[idx]; applyTheme(lv.key);
+  var w=el("div");
+  var top=el("div","topbar"), tr=el("div","track"), fl=el("div","fill"); tr.appendChild(fl);
+  var cnt=el("div","qcount"), ch=el("div","cheer"); top.appendChild(tr); top.appendChild(cnt); top.appendChild(ch); w.appendChild(top);
+  var head=el("div","card");
+  head.appendChild(el("h2","",lv.emoji+" "+lv.name+" level"));
+  head.appendChild(el("p","note",mode==="wrong"?"Retry round: only the "+items.length+" questions you missed.":items.length+" questions · "+items.length+" marks · pass mark "+lv.pass+" of "+lv.marks+"."));
+  w.appendChild(head);
+  var form=el("form"); form.setAttribute("onsubmit","return false");
+  items.forEach(function(it,n){
+    var card=el("div","qcard"); card.appendChild(el("div","tagpill",it.tag));
+    var fs=document.createElement("fieldset"), lg=document.createElement("legend");
+    lg.appendChild(el("span","n",String(n+1))); var t=el("span",""); t.textContent=it.q; lg.appendChild(t); fs.appendChild(lg);
+    var op=el("div","opts");
+    it.o.forEach(function(txt,j){
+      var lab=el("label","opt"), inp=document.createElement("input"); inp.type="radio"; inp.name="q"+n; inp.value=String(j);
+      inp.addEventListener("change",function(){ answers[n]=j; update(); });
+      lab.appendChild(inp); lab.appendChild(el("span","dot2")); var s=el("span","txt"); s.textContent=txt; lab.appendChild(s); op.appendChild(lab);
+    });
+    fs.appendChild(op); card.appendChild(fs); form.appendChild(card);
+  });
+  w.appendChild(form);
+  var warn=el("p","note",""), sb=el("button","btn block","Submit ✔"), sure=false;
+  sb.addEventListener("click",function(){
+    var miss=answers.filter(function(a){return a===null;}).length;
+    if(miss>0 && !sure){ sure=true; warn.textContent=miss+" unanswered — they count as wrong. Press Submit again to finish anyway."; warn.style.color="var(--bad)"; warn.style.background="var(--card)"; warn.style.padding="8px 12px"; warn.style.borderRadius="10px"; return; }
+    finishAttempt(idx,ids,items,answers,mode);
+  });
+  w.appendChild(sb); w.appendChild(warn);
+  function update(){ var d=answers.filter(function(a){return a!==null;}).length, p=Math.round(d/items.length*100); fl.style.width=p+"%"; cnt.textContent=d+" / "+items.length; ch.textContent=cheerText(p); sure=false; warn.textContent=""; warn.style.padding="0"; }
+  update(); screen(w);
+}
+
+/* ---------- results (result box on top, mistakes underneath) ---------- */
+function finishAttempt(idx,ids,items,answers,mode){
+  var lv=LEVELS[idx], r=getRec(lv), rows=[], gained=0;
+  items.forEach(function(it,n){
+    var ok=answers[n]===it.c; rows.push({n:n+1,it:it,a:answers[n],ok:ok});
+    if(ok && !r.earned[ids[n]]){ r.earned[ids[n]]=1; gained++; }
+  });
+  r.score=r.earned.reduce(function(s,x){return s+x;},0); r.best=Math.max(r.best,r.score); r.passed=r.passed||r.score>=lv.pass; r.attempted=true;
+  saveState(); renderResults(idx,rows,gained,mode);
+}
+function reviewCard(row){
+  var it=row.it, c=el("div","rc"), q=el("div","q"); q.textContent=row.n+". "+it.q; c.appendChild(q);
+  var a=el("div","line"); a.appendChild(document.createTextNode("You chose: ")); var b=el("b"); b.textContent=(row.a===null?"— no answer —":it.o[row.a]); a.appendChild(b); c.appendChild(a);
+  var d=el("div","line"); d.appendChild(document.createTextNode("Correct answer: ")); var e=el("b"); e.textContent=it.o[it.c]; d.appendChild(e); c.appendChild(d);
+  var x=el("div","ex"); x.innerHTML="<div><b>📖 What it is:</b> "+it.w+"</div><div><b>🛠️ How it is applied:</b> "+it.y+"</div>"; c.appendChild(x);
+  return c;
+}
+function renderResults(idx,rows,gained,mode){
+  var lv=LEVELS[idx], r=getRec(lv); applyTheme(lv.key);
+  var right=rows.filter(function(x){return x.ok;}).length, wrong=rows.filter(function(x){return !x.ok;});
+  var left=remaining(lv,r).length, pct=r.score/lv.marks;
+  var w=el("div"); w.appendChild(brand());
+  var c=el("div","card center");
+  c.appendChild(el("h2","",(r.passed?"🎉 Level passed! ":"Not passed yet — ")+lv.emoji+" "+lv.name));
+  c.appendChild(el("div","big "+(r.passed?"pass":"fail"),r.score+" <small>/ "+lv.marks+"</small>"));
+  c.appendChild(el("p","",(pct>=0.9?"🏆 Gold":pct>=0.75?"🥈 Silver":pct>=0.6?"🥉 Bronze":"💪 Keep going")+" · pass mark "+lv.pass+(mode==="wrong"?" · this round +"+gained:"")));
+  c.appendChild(el("p","","✅ "+right+" right · ❌ "+wrong.length+" wrong (this round)"));
+  var chips=el("div","chips"); chips.style.justifyContent="center";
+  rows.forEach(function(x){ chips.appendChild(el("div","chip "+(x.ok?"ok":"bad"),String(x.n))); }); c.appendChild(chips);
+  var act=el("div","row"); act.style.justifyContent="center";
+  if(left>0){ var rt=el("button","btn","↻ Try again — only the "+left+" I missed"); rt.addEventListener("click",function(){startAttempt(idx,"wrong");}); act.appendChild(rt); }
+  var fin=el("button","btn"+(left>0?" alt":""),"Finish level ▶"); fin.addEventListener("click",function(){renderEnding(idx);}); act.appendChild(fin);
+  var st=el("p","note"), cp=makeImage(idx,right,wrong.length);
+  var sh=el("button","btn wa","📤 Share score image");
+  sh.addEventListener("click",function(){ shareImage(cp,lv.key,st); }); act.appendChild(sh);
+  c.appendChild(act); c.appendChild(st);
+  var ib=el("div","imgbox"); c.appendChild(ib); cp.then(function(cv){ var im=document.createElement("img"); im.src=cv.toDataURL("image/png"); im.alt="Score image"; ib.appendChild(im); });
+  w.appendChild(c);
+  var rev=el("div","card");
+  if(wrong.length){
+    rev.appendChild(el("h2","","❌ Your mistakes ("+wrong.length+")"));
+    rev.appendChild(el("p","note","Read what each grammar word is and how it is applied, then press Try again — only these questions come back."));
+    wrong.forEach(function(x){ rev.appendChild(reviewCard(x)); });
+  } else { rev.appendChild(el("h2","","🎯 Perfect round!")); rev.appendChild(el("p","","No mistakes to fix. Press Finish level to continue.")); }
+  w.appendChild(rev); screen(w);
+}
+
+/* ---------- ending page: thanks, share, request next, emoji feedback ---------- */
+var FEEL=[{e:"😡",t:"Very bad"},{e:"😕",t:"Not good"},{e:"😐",t:"Okay"},{e:"🙂",t:"Good"},{e:"😍",t:"Loved it"}];
+function renderEnding(idx){
+  var lv=LEVELS[idx], r=getRec(lv); applyTheme(lv.key);
+  var w=el("div"); w.appendChild(brand());
+  var c=el("div","card center");
+  c.appendChild(el("h1","","Danke schön! 🙏"));
+  c.appendChild(el("p","","Thank you, "+STATE.name+", for finishing the "+lv.emoji+" <b>"+lv.name+"</b> level with <b>"+r.score+" / "+lv.marks+"</b>."+(r.passed?" You passed! 🎉":" Practise a little more and try again — you can do it! 💪")));
+  var sh=el("div","row"); sh.style.justifyContent="center";
+  sh.appendChild(link("wa","📣 Share this quiz with friends",waLink("📒 German practice quiz! I just finished the "+lv.name+" level: "+r.score+"/"+lv.marks+". Try it yourself: "+SHARE_URL)));
+  var st=el("p","note"), cp=makeImage(idx,r.score,lv.marks-r.score);
+  var ib=el("button","btn alt","📤 Share my score image"); ib.addEventListener("click",function(){shareImage(cp,lv.key,st);}); sh.appendChild(ib);
+  c.appendChild(sh); c.appendChild(st);
+  w.appendChild(c);
+
+  var rq=el("div","card center");
+  rq.appendChild(el("h2","","Want the next lesson? 📚"));
+  rq.appendChild(el("p","","Ask for more quizzes — this opens WhatsApp so you can send the request to your teacher or the group."));
+  rq.appendChild(link("wa","🙏 Request the next lesson",waLink("Hello! I finished the "+lv.name+" level of the German quiz ("+r.score+"/"+lv.marks+"). Please make the next lesson quiz! 🙏")));
+  w.appendChild(rq);
+
+  var fb=el("div","card center");
+  fb.appendChild(el("h2","","How was this level? 💬"));
+  var em=el("div","emojis"), pick=r.feedback&&r.feedback.i!=null?r.feedback.i:-1;
+  var ta=document.createElement("textarea"); ta.rows=3; ta.placeholder="Tell us more (optional) — what should be better?"; ta.value=(r.feedback&&r.feedback.text)||"";
+  var send=link("wa","💬 Send feedback on WhatsApp","#");
+  function upd(){
+    r.feedback={i:pick,text:ta.value}; saveState();
+    var f=pick>=0?FEEL[pick].e+" "+FEEL[pick].t:"(no emoji)";
+    send.href=waLink("German quiz feedback — "+lv.name+" level ("+r.score+"/"+lv.marks+")\nRating: "+f+"\nComment: "+(ta.value.trim()||"—"));
+    Array.prototype.forEach.call(em.children,function(b,k){ b.className="emo"+(k===pick?" on":""); b.setAttribute("aria-pressed",k===pick?"true":"false"); });
+  }
+  FEEL.forEach(function(f,k){ var b=el("button","emo",f.e); b.type="button"; b.title=f.t; b.setAttribute("aria-label",f.t); b.addEventListener("click",function(){pick=k;upd();}); em.appendChild(b); });
+  ta.addEventListener("input",upd);
+  fb.appendChild(em); fb.appendChild(ta); fb.appendChild(send);
+  fb.appendChild(el("p","note","There is no server here, so feedback is sent through WhatsApp — pick the chat you want to send it to."));
+  upd(); w.appendChild(fb);
+
+  var nav=el("div","card center"), row=el("div","row"); row.style.justifyContent="center";
+  if(r.passed && idx<LEVELS.length-1){ var nx=el("button","btn","Start the next level ▶"); nx.addEventListener("click",function(){ var nr=getRec(LEVELS[idx+1]); startAttempt(idx+1, nr.attempted&&remaining(LEVELS[idx+1],nr).length?"wrong":"full"); }); row.appendChild(nx); }
+  if(remaining(lv,r).length){ var rt=el("button","btn alt","↻ Retry my mistakes"); rt.addEventListener("click",function(){startAttempt(idx,"wrong");}); row.appendChild(rt); }
+  if(allPassed()){ var ct=el("button","btn","🎓 My certificate"); ct.addEventListener("click",renderCertificate); row.appendChild(ct); }
+  var bk=el("button","btn alt","Back to levels"); bk.addEventListener("click",renderDashboard); row.appendChild(bk);
+  nav.appendChild(row); w.appendChild(nav); screen(w);
+}
+
+/* ---------- score image ---------- */
+function rr(x,a,b,wd,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+wd,b,a+wd,b+h,r);x.arcTo(a+wd,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+wd,b,r);x.closePath();}
+function makeImage(idx,right,wrong){
+  var lv=LEVELS[idx], th=THEMES[lv.key], r=getRec(lv);
+  var fp=(document.fonts&&document.fonts.load)?Promise.race([Promise.all([document.fonts.load("700 40px Fredoka"),document.fonts.load("600 30px Inter")]).catch(function(){}),new Promise(function(z){setTimeout(z,1200);})]):Promise.resolve();
+  return fp.then(function(){
+    var c=document.createElement("canvas"); c.width=900; c.height=620; var x=c.getContext("2d");
+    var g=x.createLinearGradient(0,0,900,620); g.addColorStop(0,th.t1); g.addColorStop(1,th.t2); x.fillStyle=g; x.fillRect(0,0,900,620);
+    x.fillStyle="#ffffff"; rr(x,40,40,820,540,26); x.fill(); x.textAlign="center";
+    x.fillStyle="#2b2a3a"; x.font="700 46px Fredoka,sans-serif"; x.fillText("Deutsch Kurs",450,120);
+    x.font="600 30px Inter,sans-serif"; x.fillText(STATE.name,450,170);
+    x.fillStyle=th.acc; x.font="700 36px Fredoka,sans-serif"; x.fillText(lv.emoji+" "+lv.name+" level",450,235);
+    x.fillStyle=r.passed?"#0f9d58":"#d63031"; x.font="700 110px Fredoka,sans-serif"; x.fillText(r.score+" / "+lv.marks,450,370);
+    x.fillStyle="#2b2a3a"; x.font="700 32px Inter,sans-serif"; x.fillText(r.passed?"🎉 Passed!":"Keep practising!",450,430);
+    x.fillStyle="#6b6f8a"; x.font="500 24px Inter,sans-serif"; x.fillText("✅ "+right+" right   ❌ "+wrong+" wrong",450,485);
+    x.font="400 22px Inter,sans-serif"; x.fillText("German course · 4-level challenge",450,545);
+    return c;
+  });
+}
+function shareImage(cp,key,status){
+  cp.then(function(cv){ return new Promise(function(z){cv.toBlob(z,"image/png");}); }).then(function(b){
+    var f=new File([b],key+"-result.png",{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[f]})) return navigator.share({files:[f],title:"My German result"});
+    throw new Error("noshare");
+  }).catch(function(e){ if(e&&e.name==="AbortError") return; status.textContent="Sharing isn't available here. Long-press the image on the results page, save it, then attach it in WhatsApp."; });
+}
+
+/* ---------- certificate ---------- */
+function renderCertificate(){
+  applyTheme("home");
+  var w=el("div"); w.appendChild(brand());
+  var c=el("div","card center");
+  c.appendChild(el("h1","","🎓 Certificate of Completion"));
+  c.appendChild(el("p","","This certifies that"));
+  c.appendChild(el("h2","",""+STATE.name.replace(/</g,"&lt;")));
+  c.appendChild(el("p","","has passed all 4 levels of the German course with a best total of"));
+  c.appendChild(el("div","big pass",totalBest()+" <small>/ "+TOTAL+"</small>"));
+  var b=el("button","btn alt","Back to levels"); b.addEventListener("click",renderDashboard); c.appendChild(b);
+  w.appendChild(c); screen(w);
+}
+
+/* ---------- boot ---------- */
+try{ if(STATE.name){ renderDashboard(); } else { renderWelcome(); } }
+catch(e){ document.getElementById("app").innerHTML="<div class='card'>Something didn't load. Please open this page in Chrome or Safari.</div>"; }
+})();
+</script>
+</body>
+</html>
